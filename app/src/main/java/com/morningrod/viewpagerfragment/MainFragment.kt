@@ -26,8 +26,15 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.fragmentViewPager.adapter = ViewPagerAdapter(requireActivity())
         binding.fragmentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
+            override fun onPageScrolled( position: Int,positionOffset: Float,positionOffsetPixels: Int) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
 
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+            }
+
+            override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
             }
         })

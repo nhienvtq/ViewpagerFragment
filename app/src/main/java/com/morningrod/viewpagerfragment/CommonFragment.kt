@@ -14,8 +14,12 @@ class CommonFragment : Fragment() {
     private lateinit var _binding: FragmentCommonBinding
     private val binding get() = _binding
 
+    private lateinit var fragmentCommon: CommonFragment
+    private lateinit var mBundle: Bundle
+
     private lateinit var title: String
     private var pageNumber by Delegates.notNull<Int>()
+    private var oriPageNumber by Delegates.notNull<Int>()
     private lateinit var mText: String
 
     override fun onCreateView(
@@ -25,18 +29,10 @@ class CommonFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_common, container, false)
 
+        fragmentCommon = CommonFragment()
+        mBundle = Bundle()
         title = arguments?.getString("titleKey").toString()
         pageNumber = arguments?.getInt("pageKey") ?: 0
-        mText = arguments?.getString("editTextKey").toString()
-//        val mFragment = CommonFragment()
-//        val mBundle = Bundle()
-//        mBundle.putString("editTextKey", binding.childFragmentEdittext.text.toString())
-//        mFragment.arguments = mBundle
-//        if (arguments?.getString("editTextKey").toString() == null){
-//            mText = ""
-//        } else {
-//            mText = arguments?.getString("editTextKey").toString()
-//        }
 
         return binding.root
     }
@@ -45,17 +41,14 @@ class CommonFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.childFragmentTextview.text = "$title: $pageNumber"
-        binding.childFragmentEdittext.setText("$pageNumber: $mText")
-
     }
 
     fun newInstance(pageNumber: Int, title: String?): CommonFragment {
-        val fragmentFirst = CommonFragment()
-        val args = Bundle()
-        args.putInt("pageKey", pageNumber)
-        args.putString("titleKey", title)
-        args.putString("editTextKey", "hello")
-        fragmentFirst.arguments = args
-        return fragmentFirst
+        val createFragment = CommonFragment()
+        val createBundle = Bundle()
+        createBundle.putInt("pageKey", pageNumber)
+        createBundle.putString("titleKey", title)
+        createFragment.arguments = createBundle
+        return createFragment
     }
 }
